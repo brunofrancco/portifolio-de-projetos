@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bruno Franco — Data Science & Analytics</title>
+<meta name="description" content="Portfólio de Bruno Franco, Data Science e Analytics. Projetos, habilidades e experiência transformando dados em decisões de negócio." />
+
+<!-- Carregamento das fontes: Space Grotesk (títulos), IBM Plex Sans (corpo), IBM Plex Mono (código) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  /* ============================================
+     VARIÁVEIS GLOBAIS (cores, tamanhos, etc.)
+     ============================================ */
+  :root{
+    --paper: #F3F5F7;                     /* fundo principal */
+    --paper-dot: rgba(20,24,31,0.10);     /* pontilhado sutil */
+    --ink: #14181F;                       /* texto principal escuro */
+    --ink-soft: #4B5563;                  /* texto secundário */
+    --navy: #0E1420;                      /* fundo escuro (hero, contato) */
+    --navy-soft: #B9C2D0;                 /* texto claro sobre navy */
+    --amber: #E8A33D;                     /* cor de destaque (strings, botões) */
+    --teal: #2FA7A0;                      /* cor de destaque (chaves, links) */
+    --line: rgba(20,24,31,0.12);          /* bordas claras */
+    --line-dark: rgba(255,255,255,0.14);  /* bordas sobre fundo escuro */
+    --radius: 10px;                       /* borda arredondada padrão */
+    --maxw: 1120px;                       /* largura máxima do conteúdo */
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }         /* rolagem suave para âncoras */
+
+  /* Respeita preferência do usuário por redução de movimento */
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ animation-duration:0.001ms !important; transition-duration:0.001ms !important; }
+  }
+
+  /* ============================================
+     ESTILOS BÁSICOS DO CORPO
+     ============================================ */
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;   /* melhora renderização de fontes */
+  }
+
+  h1,h2,h3{
+    font-family:'Space Grotesk', sans-serif;
+    margin:0;
+    letter-spacing:-0.01em;               /* leve compressão para títulos */
+  }
+
+  .mono{ font-family:'IBM Plex Mono', monospace; }
+
+  a{ color:inherit; }                     /* links herdam cor do contexto */
+
+  /* Container centralizado com padding lateral */
+  .wrap{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:0 2rem;
+  }
+
+  /* ============================================
+     NAVEGAÇÃO FIXA NO TOPO
+     ============================================ */
+  .nav{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(243,245,247,0.82);    /* semi-transparente para efeito vidro */
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);   /* compatibilidade Safari */
+    border-bottom:1px solid var(--line);
+  }
+  .nav .wrap{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    height:64px;
+  }
+  .nav .brand{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    font-size:1.05rem;
+    text-decoration:none;
+  }
+  .nav .brand span{ color:var(--teal); }  /* destaque no nome */
+  .nav ul{
+    list-style:none;
+    display:flex;
+    gap:2rem;
+    margin:0;
+    padding:0;
+  }
+  .nav a.navlink{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+    text-transform:lowercase;
+    text-decoration:none;
+    color:var(--ink-soft);
+    padding:6px 0;
+    transition:color 0.25s ease;
+  }
+  .nav a.navlink:hover{ color:var(--ink); }
+  .nav-toggle{ display:none; }            /* botão mobile (não implementado visualmente) */
+
+  @media (max-width:760px){
+    .nav ul{ display:none; }              /* esconde menu em telas pequenas (simplificado) */
+  }
+
+  /* ============================================
+     SEÇÃO HERO (com console animado à direita)
+     ============================================ */
+  .hero{
+    background:var(--navy);
+    color:#fff;
+    padding:6rem 0 4.5rem;
+    position:relative;
+    overflow:hidden;
+  }
+  /* Fundo com gradientes radiais para dar profundidade */
+  .hero::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    background-image:
+      radial-gradient(circle at 18% 20%, rgba(47,167,160,0.18), transparent 40%),
+      radial-gradient(circle at 82% 75%, rgba(232,163,61,0.14), transparent 45%);
+    pointer-events:none;
+  }
+  .hero .wrap{ position:relative; z-index:1; }
+
+  /* Grid de duas colunas: texto à esquerda, console à direita */
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  /* Coluna do texto (nome, role, tagline, botões) */
+  .hero-text {
+    /* nada adicional necessário */
+  }
+
+  /* Coluna do console */
+  .hero-console {
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Caixa do console simulando um terminal */
+  .console{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.92rem;
+    background:rgba(255,255,255,0.04);
+    border:1px solid var(--line-dark);
+    border-radius:var(--radius);
+    padding:1.4rem 1.6rem;
+    max-width:100%;
+    width:100%;
+    color:var(--navy-soft);
+    white-space:pre-wrap;                 /* respeita quebras de linha */
+    word-break:break-word;
+    height:240px;                         /* altura fixa para evitar redimensionamento */
+    overflow:hidden;                      /* esconde conteúdo que ultrapassar */
+  }
+  /* Cores para as diferentes partes do JSON */
+  .console .k{ color:var(--teal); }      /* chaves */
+  .console .s{ color:var(--amber); }      /* strings */
+  .console .p{ color:var(--navy-soft); opacity:0.55; } /* pontuação */
+  
+  /* Cursor piscante */
+  .caret{
+    display:inline-block;
+    width:8px;
+    height:1.1em;
+    background:var(--amber);
+    vertical-align:text-bottom;
+    margin-left:2px;
+    animation:blink 1s steps(1) infinite;
+  }
+  @keyframes blink{ 50%{ opacity:0; } }
+
+  .hero h1{
+    font-size:clamp(2.4rem, 5.5vw, 4rem);
+    font-weight:700;
+    margin-top:0;
+    color:#fff;
+  }
+  .hero .role{
+    font-family:'IBM Plex Mono', monospace;
+    color:var(--amber);
+    font-size:1rem;
+    margin-top:0.6rem;
+    letter-spacing:0.02em;
+  }
+  .hero .tagline{
+    max-width:520px;
+    margin-top:1.1rem;
+    color:var(--navy-soft);
+    font-size:1.05rem;
+  }
+  .hero-ctas{
+    margin-top:2.2rem;
+    display:flex;
+    gap:0.9rem;
+    flex-wrap:wrap;
+  }
+
+  /* Responsivo: em telas menores, empilha (console abaixo do texto) */
+  @media (max-width:800px){
+    .hero-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    .hero-console {
+      order: -1; /* opcional: coloca o console acima do texto em mobile */
+    }
+  }
+
+  /* ============================================
+     BOTÕES PADRÃO
+     ============================================ */
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:0.5rem;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.85rem;
+    text-decoration:none;
+    padding:0.75rem 1.3rem;
+    border-radius:999px;                  /* formato pílula */
+    transition:transform 0.25s ease, background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+  }
+  .btn-solid{
+    background:var(--amber);
+    color:var(--navy);
+    font-weight:600;
+  }
+  .btn-solid:hover{ transform:translateY(-2px); }
+  .btn-outline{
+    border:1px solid var(--line-dark);
+    color:#fff;
+  }
+  .btn-outline:hover{
+    border-color:var(--amber);
+    color:var(--amber);
+    transform:translateY(-2px);
+  }
+
+  /* ============================================
+     FAIXA DE KPIs (indicadores rápidos)
+     ============================================ */
+  .kpi{
+    border-bottom:1px solid var(--line);
+    background:
+      radial-gradient(var(--paper-dot) 1px, transparent 1px) 0 0/16px 16px,
+      var(--paper);                       /* textura pontilhada sutil */
+  }
+  .kpi .wrap{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:2rem;
+    padding:2.6rem 2rem;
+  }
+  .kpi-item{ text-align:left; }
+  .kpi-num{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:2.4rem;
+    font-weight:700;
+    color:var(--ink);
+  }
+  .kpi-num span{ color:var(--teal); }     /* destaque no número */
+  .kpi-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.78rem;
+    color:var(--ink-soft);
+    margin-top:0.3rem;
+  }
+  @media (max-width:760px){
+    .kpi .wrap{ grid-template-columns:1fr; gap:1.6rem; }
+  }
+
+  /* ============================================
+     ESTRUTURA DAS SEÇÕES
+     ============================================ */
+  section{ padding:5.5rem 0; }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    color:var(--teal);
+    text-transform:lowercase;
+    margin-bottom:0.6rem;
+  }
+  .section-title{
+    font-size:clamp(1.7rem, 3vw, 2.2rem);
+    font-weight:700;
+    margin-bottom:2.6rem;
+  }
+
+  /* ============================================
+     SEÇÃO SOBRE (grid com texto + card)
+     ============================================ */
+  .about-wrapper {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 3.5rem;
+    align-items: start;                   /* alinha o topo do card com o título */
+  }
+  .about-left .section-title {
+    margin-bottom: 1.5rem;
+  }
+  .about-left p {
+    color: var(--ink-soft);
+    margin: 0 0 1.1rem;
+  }
+  /* Card estilo ficha técnica / registro */
+  .record{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.85rem;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:1.5rem 1.6rem;
+  }
+  .record-photo{
+    width:100%;
+    aspect-ratio:1 / 1;
+    border-radius:calc(var(--radius) - 2px);
+    overflow:hidden;
+    margin-bottom:1.3rem;
+    background:var(--paper);
+    border:1px solid var(--line);
+  }
+  .record-photo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    filter:grayscale(15%);
+  }
+  .record-row{
+    display:flex;
+    justify-content:space-between;
+    gap:1rem;
+    padding:0.55rem 0;
+    border-bottom:1px solid var(--line);
+  }
+  .record-row:last-child{ border-bottom:none; }
+  .record-key{ color:var(--ink-soft); }
+  .record-val{ color:var(--ink); text-align:right; }
+  .dot{
+    display:inline-block;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--teal);
+    margin-right:6px;
+  }
+  @media (max-width:820px){
+    .about-wrapper { grid-template-columns:1fr; }
+  }
+
+  /* ============================================
+     SEÇÃO HABILIDADES
+     ============================================ */
+  .skills-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:2.5rem;
+  }
+  .skill-card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:1.8rem 1.9rem;
+  }
+  .skill-card h3{
+    font-size:1.15rem;
+    margin-bottom:0.3rem;
+  }
+  .skill-card .accent-analise{ color:var(--amber); }
+  .skill-card .accent-ciencia{ color:var(--teal); }
+  .skill-card .kicker{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.72rem;
+    color:var(--ink-soft);
+    margin-bottom:1.2rem;
+    display:block;
+  }
+  .skill-list{ list-style:none; margin:0; padding:0; }
+  .skill-list li{
+    font-size:0.94rem;
+    color:var(--ink-soft);
+    padding:0.5rem 0;
+    border-top:1px solid var(--line);
+    display:flex;
+    gap:0.6rem;
+  }
+  .skill-list li:first-child{ border-top:none; }
+  /* Símbolo antes de cada item */
+  .skill-list li::before{
+    content:'›';
+    font-family:'IBM Plex Mono', monospace;
+    color:var(--ink);
+    opacity:0.4;
+  }
+  @media (max-width:820px){
+    .skills-grid{ grid-template-columns:1fr; }
+  }
+
+  /* ============================================
+     SEÇÃO PROJETOS
+     ============================================ */
+  .proj-group{ margin-bottom:3rem; }
+  .proj-group:last-child{ margin-bottom:0; }
+  .proj-heading{
+    display:flex;
+    align-items:baseline;
+    gap:0.7rem;
+    margin-bottom:1.4rem;
+  }
+  .proj-heading h3{ font-size:1.3rem; }
+  .proj-heading .tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.72rem;
+    padding:3px 10px;
+    border-radius:999px;
+  }
+  .tag-analise{ background:rgba(232,163,61,0.15); color:#95651c; }
+  .tag-ciencia{ background:rgba(47,167,160,0.15); color:#1c716b; }
+
+  .proj-card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:2rem;
+    display:grid;
+    grid-template-columns:220px 1fr;
+    gap:2rem;
+  }
+  .proj-metric{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    font-size:2.1rem;
+    line-height:1.1;
+  }
+  .proj-metric-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.75rem;
+    color:var(--ink-soft);
+    margin-top:0.4rem;
+  }
+  .proj-card h4{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:1.15rem;
+    font-weight:600;
+    margin-bottom:0.6rem;
+  }
+  .proj-card p{ color:var(--ink-soft); margin:0 0 1rem; }
+  .pill-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:0.5rem;
+    margin-bottom:1.2rem;
+  }
+  .pill{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.72rem;
+    padding:4px 10px;
+    border:1px solid var(--line);
+    border-radius:999px;
+    color:var(--ink-soft);
+  }
+  .proj-link{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.82rem;
+    text-decoration:none;
+    color:var(--ink);
+    border-bottom:1px solid var(--ink);
+    padding-bottom:2px;
+    transition:color 0.25s ease, border-color 0.25s ease;
+  }
+  .proj-link:hover{ color:var(--teal); border-color:var(--teal); }
+
+  @media (max-width:720px){
+    .proj-card{ grid-template-columns:1fr; }
+  }
+
+  /* ============================================
+     SEÇÃO CONTATO
+     ============================================ */
+  .contact{
+    background:var(--navy);
+    color:#fff;
+  }
+  .contact .wrap{
+    display:grid;
+    grid-template-columns:1.3fr 1fr;
+    gap:3rem;
+    align-items:center;
+  }
+  .contact h2{ color:#fff; }
+  .contact p{ color:var(--navy-soft); max-width:460px; }
+  .status-line{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.85rem;
+    color:var(--navy-soft);
+    margin-top:1.2rem;
+  }
+  .status-line .dot{ background:var(--teal); box-shadow:0 0 0 3px rgba(47,167,160,0.25); }
+  .contact-card{
+    background:rgba(255,255,255,0.04);
+    border:1px solid var(--line-dark);
+    border-radius:var(--radius);
+    padding:1.7rem 1.8rem;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.9rem;
+  }
+  .contact-card a{
+    display:block;
+    text-decoration:none;
+    color:#fff;
+    padding:0.6rem 0;
+    border-top:1px solid var(--line-dark);
+    transition:color 0.25s ease;
+  }
+  .contact-card a:first-child{ border-top:none; }
+  .contact-card a:hover{ color:var(--amber); }
+  @media (max-width:820px){
+    .contact .wrap{ grid-template-columns:1fr; }
+  }
+
+  /* ============================================
+     RODAPÉ
+     ============================================ */
+  footer{
+    background:var(--navy);
+    border-top:1px solid var(--line-dark);
+    padding:1.6rem 0;
+  }
+  footer .wrap{
+    display:flex;
+    justify-content:space-between;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.75rem;
+    color:var(--navy-soft);
+    flex-wrap:wrap;
+    gap:0.5rem;
+  }
+
+  /* ============================================
+     ANIMAÇÃO DE REVELAÇÃO NO SCROLL (JS)
+     ============================================ */
+  .reveal{
+    opacity:0;
+    transform:translateY(16px);
+    transition:opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.is-visible{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+  /* Foco visível para acessibilidade (teclado) */
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--teal);
+    outline-offset:3px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== NAVEGAÇÃO ==================== -->
+<nav class="nav">
+  <div class="wrap">
+    <a href="#inicio" class="brand">bruno<span>franco</span>.ds</a>
+    <ul>
+      <li><a href="#inicio" class="navlink">início</a></li>
+      <li><a href="#sobre" class="navlink">sobre</a></li>
+      <li><a href="#habilidades" class="navlink">habilidades</a></li>
+      <li><a href="#projetos" class="navlink">projetos</a></li>
+      <li><a href="#contato" class="navlink">contato</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ==================== HERO (console à direita) ==================== -->
+<header class="hero" id="inicio">
+  <div class="wrap">
+    <div class="hero-grid">
+      <!-- Coluna da esquerda: informações principais -->
+      <div class="hero-text">
+        <h1>Bruno Franco</h1>
+        <div class="role">Data Science e Analytics</div>
+        <p class="tagline">Transformo dados em decisões de negócio da análise exploratória aos modelos de machine learning em produção.</p>
+        <div class="hero-ctas">
+          <a href="#projetos" class="btn btn-solid">Ver projetos</a>
+          <a href="#contato" class="btn btn-outline">Entrar em contato</a>
+        </div>
+      </div>
+      <!-- Coluna da direita: console animado -->
+      <div class="hero-console">
+        <div class="console mono" id="console"></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ==================== KPI RÁPIDOS ==================== -->
+<div class="kpi">
+  <div class="wrap">
+    <div class="kpi-item reveal">
+      <div class="kpi-num"><span>R$15M+</span></div>
+      <div class="kpi-label">// impacto estimado em receita</div>
+    </div>
+    <div class="kpi-item reveal">
+      <div class="kpi-num">2</div>
+      <div class="kpi-label">// projetos ponta a ponta entregues</div>
+    </div>
+    <div class="kpi-item reveal">
+      <div class="kpi-num">10+</div>
+      <div class="kpi-label">// ferramentas de dados &amp; cloud</div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SOBRE ==================== -->
+<section id="sobre">
+  <div class="wrap">
+    <div class="eyebrow reveal">// sobre</div>
+    <div class="about-wrapper">
+      <div class="about-left">
+        <h2 class="section-title reveal">Quem escreve os dados sou eu</h2>
+        <div class="reveal">
+          <p>Sou apaixonado por transformar dados em decisões de negócio. Atuo na fronteira entre Análise de Dados e Ciência de Dados, unindo a curiosidade investigativa de quem explora números para encontrar respostas rápidas com a profundidade técnica de quem constrói modelos preditivos capazes de gerar impacto real e mensurável.</p>
+          <p>Já desenvolvi projetos completos de ponta a ponta da compreensão do problema de negócio até a publicação de soluções em produção sempre com foco em gerar valor tangível: redução de custos, aumento de receita e melhoria na tomada de decisão.<br>Hoje busco uma oportunidade para atuar como Analista ou Cientista de Dados, contribuindo com uma visão orientada a dados e resultados.</p>
+        </div>
+      </div>
+      <div class="about-right">
+        <!-- Card com foto e dados pessoais -->
+        <div class="record reveal">
+          <div class="record-photo">
+            <img src="images/bruno-franco.jpg" alt="Foto de Bruno Franco" />
+          </div>
+          <div class="record-row"><span class="record-key">nome</span><span class="record-val">Bruno Franco</span></div>
+          <div class="record-row"><span class="record-key">atuação</span><span class="record-val">Data Science e Analytics</span></div>
+          <div class="record-row"><span class="record-key">foco</span><span class="record-val">ML, BI, dados em produção</span></div>
+          <div class="record-row"><span class="record-key">status</span><span class="record-val"><span class="dot"></span>disponível</span></div>
+          <div class="record-row"><span class="record-key">contato</span><span class="record-val">brunofranccofr@gmail.com</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== HABILIDADES ==================== -->
+<section id="habilidades" style="background:#fff; border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+  <div class="wrap">
+    <div class="eyebrow reveal">// habilidades</div>
+    <h2 class="section-title reveal">Duas disciplinas, um mesmo objetivo</h2>
+    <div class="skills-grid">
+      <div class="skill-card reveal">
+        <span class="kicker accent-analise">DATA ANALYSIS</span>
+        <h3>Do dado bruto à decisão</h3>
+        <ul class="skill-list">
+          <li>SQL, Python (Pandas, Numpy) e web scraping</li>
+          <li>Bancos de dados SQLite, Postgres, MySQL, Oracle, MongoDB e Cassandra</li>
+          <li>Estatística descritiva, EDA e testes de hipótese</li>
+          <li>Matplotlib, Seaborn, Plotly e Bokeh</li>
+          <li>Power BI, Tableau, Metabase e Looker</li>
+        </ul>
+      </div>
+      <div class="skill-card reveal">
+        <span class="kicker accent-ciencia">DATA SCIENCE</span>
+        <h3>Do modelo à produção</h3>
+        <ul class="skill-list">
+          <li>Regressão, classificação, clusterização e Learn to Rank</li>
+          <li>Balanceamento de dados, seleção de atributos e redução de dimensionalidade</li>
+          <li>RMSE, MAE, MAPE, matriz de confusão, ROC, AUC, Silhouette Score</li>
+          <li>Git, Docker, Streamlit, Flask e APIs em Python</li>
+          <li>AWS, GCP, Azure e Heroku</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== PROJETOS ==================== -->
+<section id="portfolio">
+  <div class="wrap" id="projetos">
+    <div class="eyebrow reveal">// projetos</div>
+    <h2 class="section-title reveal">Projetos por área</h2>
+
+    <!-- Projeto de Data Analysis -->
+    <div class="proj-group">
+      <div class="proj-heading reveal">
+        <h3>Data Analysis</h3>
+        <span class="tag tag-analise">exploratório</span>
+      </div>
+      <div class="proj-card reveal">
+        <div>
+          <div class="proj-metric">R$ ideal</div>
+          <div class="proj-metric-label">// preço de revenda calculado</div>
+        </div>
+        <div>
+          <h4>Identificação de imóveis para compra e revenda</h4>
+          <p>Identificação de imóveis abaixo do preço médio de venda e definição do preço ideal de revenda, a partir de uma análise exploratória de dados em Python com o objetivo de maximizar o lucro na operação.</p>
+          <div class="pill-row">
+            <span class="pill">Python</span>
+            <span class="pill">Pandas</span>
+            <span class="pill">Seaborn</span>
+            <span class="pill">Plotly &amp; Folium</span>
+            <span class="pill">Streamlit</span>
+            <span class="pill">Heroku</span>
+          </div>
+          <a href="#" class="proj-link">Saiba mais →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Projeto de Data Science -->
+    <div class="proj-group">
+      <div class="proj-heading reveal">
+        <h3>Data Science</h3>
+        <span class="tag tag-ciencia">machine learning</span>
+      </div>
+      <div class="proj-card reveal">
+        <div>
+          <div class="proj-metric">R$15M/ano</div>
+          <div class="proj-metric-label">// receita potencial estimada</div>
+        </div>
+        <div>
+          <h4>Programa de fidelidade com clusterização de clientes</h4>
+          <p>Segmentação de clientes com base em características de performance de compra, usando técnicas não supervisionadas de Machine Learning, para selecionar grupos elegíveis a um programa de fidelidade e aumentar a receita da empresa.</p>
+          <div class="pill-row">
+            <span class="pill">Python</span>
+            <span class="pill">K-Means</span>
+            <span class="pill">Hierarchical Clustering</span>
+            <span class="pill">DBScan</span>
+            <span class="pill">AWS (EC2, S3, RDS)</span>
+          </div>
+          <a href="#" class="proj-link">Saiba mais →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CONTATO ==================== -->
+<section class="contact" id="contato">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow" style="color:var(--amber);">// contato</div>
+      <h2>Vamos conversar sobre dados</h2>
+      <p>Estou disponível para oportunidades como Analista ou Cientista de Dados. Envie uma mensagem ou conecte-se comigo no LinkedIn.</p>
+      <div class="status-line"><span class="dot"></span>disponível para novas oportunidades</div>
+    </div>
+    <div class="contact-card reveal">
+      <a href="mailto:brunofranccofr@gmail.com">✉ brunofranccofr@gmail.com</a>
+      <a href="https://www.linkedin.com/in/brunofrancco/" target="_blank" rel="noopener">in/ linkedin.com/in/brunofrancco</a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== RODAPÉ ==================== -->
+<footer>
+  <div class="wrap">
+    <span>© 2026 Bruno Franco</span>
+    <span>Feito com dados, café e Python</span>
+  </div>
+</footer>
+
+<!-- ==================== SCRIPTS ==================== -->
+<script>
+  // ============================================
+  // EFEITO DE DIGITAÇÃO NO CONSOLE (LOOP INFINITO)
+  // ============================================
+  (function(){
+    const el = document.getElementById('console');
+    
+    // Linhas do JSON com marcação de classe para estilização
+    const lines = [
+      { text: '{', cls: 'p' },                                // abertura
+      { text: '  "nome": ', cls: 'k', inline: true },         // chave + espaçamento
+      { text: '"Bruno Franco",', cls: 's' },                  // valor string
+      { text: '  "atuacao": ', cls: 'k', inline: true },
+      { text: '"Data Science & Analytics",', cls: 's' },
+      { text: '  "foco": ', cls: 'k', inline: true },
+      { text: '["Machine Learning", "BI", "Produção"]', cls: 's' },
+      { text: '}', cls: 'p' }                                 // fechamento
+    ];
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Versão estática (sem animação) para quem prefere menos movimento
+    function renderStatic(){
+      el.innerHTML = lines.map(l => {
+        if(l.inline){
+          return '<span class="k">' + l.text + '</span>';
+        }
+        return '<span class="' + l.cls + '">' + l.text + '</span>';
+      }).join('\n');
+    }
+
+    if(prefersReduced){
+      renderStatic();
+      return;
+    }
+
+    let html = '';
+    let li = 0;            // índice da linha atual
+    let ci = 0;            // índice do caractere dentro da linha
+    const speed = 35;      // ms por caractere (mais lento, conforme solicitado)
+
+    function typeStep(){
+      // Se terminou todas as linhas, pausa e reinicia do zero (loop)
+      if(li >= lines.length){
+        setTimeout(() => {
+          html = '';       // limpa o conteúdo
+          li = 0;
+          ci = 0;
+          typeStep();      // reinicia a digitação
+        }, 2500);          // pausa de 2,5 segundos antes de reiniciar
+        return;
+      }
+
+      const current = lines[li];
+      // Define a tag de abertura conforme o tipo (inline ou bloco)
+      const openTag = current.inline ? '<span class="k">' : '<span class="' + current.cls + '">';
+
+      // Se for o primeiro caractere da linha, insere a tag de abertura
+      if(ci === 0){
+        html += openTag;
+      }
+
+      // Se ainda há caracteres a digitar na linha atual
+      if(ci < current.text.length){
+        html += current.text[ci];                                // adiciona o próximo caractere
+        el.innerHTML = html + '<span class="caret"></span>';     // exibe com cursor
+        ci++;
+        setTimeout(typeStep, speed);
+      } else {
+        // Fim da linha: fecha a tag e insere quebra de linha
+        html += '</span>\n';
+        li++;
+        ci = 0;
+        // Pequena pausa antes de começar a próxima linha (4x a velocidade)
+        setTimeout(typeStep, speed * 4);
+      }
+    }
+
+    // Inicia o loop após 400ms
+    setTimeout(typeStep, 400);
+  })();
+
+  // ============================================
+  // SCROLL REVEAL (mostra elementos ao rolar)
+  // ============================================
+  (function(){
+    const items = document.querySelectorAll('.reveal');
+    
+    // Fallback: se o navegador não suportar IntersectionObserver, mostra todos imediatamente
+    if(!('IntersectionObserver' in window)){
+      items.forEach(i => i.classList.add('is-visible'));
+      return;
+    }
+    
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('is-visible');   // torna visível
+          io.unobserve(entry.target);                 // para de observar após revelar
+        }
+      });
+    }, { threshold: 0.15 });                          // 15% do elemento visível dispara
+    
+    items.forEach(i => io.observe(i));
+  })();
+</script>
+
+</body>
+</html>
+```
