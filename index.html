@@ -424,6 +424,7 @@
      ============================================ */
   .proj-group{ margin-bottom:3rem; }
   .proj-group:last-child{ margin-bottom:0; }
+  .proj-list{ display:grid; gap:1.2rem; }   /* espaço entre cards do mesmo grupo */
   .proj-heading{
     display:flex;
     align-items:baseline;
@@ -621,8 +622,8 @@
 <div class="kpi">
   <div class="wrap">
     <div class="kpi-item reveal">
-      <div class="kpi-num"><span>~720 mil</span></div>
-      <div class="kpi-label">// linhas modeladas em star schema</div>
+      <div class="kpi-num"><span>6</span></div>
+      <div class="kpi-label">// projetos ponta a ponta publicados</div>
     </div>
     <div class="kpi-item reveal">
       <div class="kpi-num">15</div>
@@ -678,18 +679,19 @@
           <li>Indicadores, KPIs e relatórios automatizados (Excel e HTML)</li>
           <li>Estatística descritiva, EDA, análise de coortes e testes de hipótese</li>
           <li>Matplotlib, Seaborn, Plotly e Bokeh</li>
-          <li>Power BI, Tableau, Metabase e Looker</li>
+          <li>Power BI, Tableau, Metabase, Looker e Streamlit</li>
         </ul>
       </div>
       <div class="skill-card reveal">
         <span class="kicker accent-engenharia">DATA ENGINEERING</span>
         <h3>Do dado bruto ao dado confiável</h3>
         <ul class="skill-list">
-          <li>Pipelines de ETL em Python, web scraping e automação de rotinas</li>
+          <li>Pipelines ETL/ELT em Python, consumo de APIs e web scraping</li>
+          <li>Orquestração com Airflow (Cloud Composer) e transformação com dbt</li>
           <li>Modelagem dimensional: star schema, tabelas fato e dimensão</li>
-          <li>Qualidade de dados: validação, deduplicação e quarentena</li>
-          <li>Bancos de dados SQLite, Postgres, MySQL, Oracle, MongoDB e Cassandra</li>
-          <li>Git, Docker, testes, CI (GitHub Actions) e APIs em Python</li>
+          <li>Qualidade de dados e governança: validação, deduplicação e LGPD</li>
+          <li>BigQuery, DuckDB, SQLite, Postgres, MySQL, Oracle, MongoDB e Cassandra</li>
+          <li>Git, Docker, Terraform, testes e CI (GitHub Actions)</li>
           <li>AWS, GCP, Azure e Heroku</li>
         </ul>
       </div>
@@ -703,11 +705,122 @@
     <div class="eyebrow reveal">// projetos</div>
     <h2 class="section-title reveal">Projetos por área</h2>
 
-    <!-- Projeto de Data Analysis -->
+    <!-- Projetos de Data Engineering -->
+    <div class="proj-group">
+      <div class="proj-heading reveal">
+        <h3>Data Engineering</h3>
+        <span class="tag tag-engenharia">pipeline &amp; modelagem</span>
+      </div>
+      <div class="proj-list">
+      <div class="proj-card reveal">
+        <div>
+          <div class="proj-metric">100% GCP</div>
+          <div class="proj-metric-label">// BigQuery, Composer e Terraform</div>
+        </div>
+        <div>
+          <h4>Plataforma de dados de RH (People Analytics)</h4>
+          <p>Pipeline ELT de ponta a ponta para métricas do ciclo de vida do colaborador (atração, performance, turnover, engajamento e remuneração): extração de uma API de HRIS com OAuth2, paginação e retry, carga no BigQuery, star schema em SQL e dbt, mascaramento de dados pessoais (LGPD), orquestração com Airflow e infraestrutura como código.</p>
+          <div class="pill-row">
+            <span class="pill">Python</span>
+            <span class="pill">FastAPI</span>
+            <span class="pill">BigQuery</span>
+            <span class="pill">dbt</span>
+            <span class="pill">Airflow (Composer)</span>
+            <span class="pill">Terraform</span>
+            <span class="pill">LGPD</span>
+          </div>
+          <a href="https://github.com/brunofrancco/people-analytics-data-platform" target="_blank" rel="noopener" class="proj-link">Ver no GitHub →</a>
+        </div>
+      </div>
+      <div class="proj-card reveal">
+        <div>
+          <div class="proj-metric">API → KPI</div>
+          <div class="proj-metric-label">// extração, modelagem e dashboard</div>
+        </div>
+        <div>
+          <h4>Analytics Engineering de e-commerce</h4>
+          <p>Fluxo completo de analytics engineering: extração de uma API REST, transformação em Python, star schema em DuckDB, validações automáticas de qualidade (chave primária, integridade referencial, nulos e negativos) e dashboard em Streamlit com KPIs de receita, ticket médio e clientes, além de uma aba de qualidade de dados.</p>
+          <div class="pill-row">
+            <span class="pill">Python</span>
+            <span class="pill">Requests</span>
+            <span class="pill">DuckDB</span>
+            <span class="pill">SQL</span>
+            <span class="pill">Star schema</span>
+            <span class="pill">Streamlit</span>
+            <span class="pill">pytest</span>
+          </div>
+          <a href="https://github.com/brunofrancco/ecommerce-analytics-engineering" target="_blank" rel="noopener" class="proj-link">Ver no GitHub →</a>
+        </div>
+      </div>
+      <div class="proj-card reveal">
+        <div>
+          <div class="proj-metric">15 regras</div>
+          <div class="proj-metric-label">// de qualidade de dados no pipeline</div>
+        </div>
+        <div>
+          <h4>Pipeline e data mart de uma seguradora digital</h4>
+          <p>Pipeline ponta a ponta para a carteira de uma seguradora digital: validação dos dados brutos com quarentena, ETL para um star schema em SQL com snapshot mensal de apólices, 8 indicadores versionados (sinistralidade, cancelamento, funil de conversão e coortes) e relatórios automatizados em Excel e HTML, com testes e CI.</p>
+          <div class="pill-row">
+            <span class="pill">Python</span>
+            <span class="pill">SQL</span>
+            <span class="pill">Pandas</span>
+            <span class="pill">Star schema</span>
+            <span class="pill">ETL</span>
+            <span class="pill">Data quality</span>
+            <span class="pill">GitHub Actions</span>
+          </div>
+          <a href="https://github.com/brunofrancco/insurance-data-analytics" target="_blank" rel="noopener" class="proj-link">Ver no GitHub →</a>
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <!-- Projetos de Data Analysis -->
     <div class="proj-group">
       <div class="proj-heading reveal">
         <h3>Data Analysis</h3>
-        <span class="tag tag-analise">exploratório</span>
+        <span class="tag tag-analise">análise &amp; insights</span>
+      </div>
+      <div class="proj-list">
+      <div class="proj-card reveal">
+        <div>
+          <div class="proj-metric">r = −0,86</div>
+          <div class="proj-metric-label">// desconto × margem de lucro</div>
+        </div>
+        <div>
+          <h4>Superstore Sales Analytics</h4>
+          <p>Case de análise de vendas de varejo (2014–2017): limpeza, EDA, testes de hipótese e ANOVA, curva de Pareto e segmentação RFM. Mostra que descontos acima de 50% geram prejuízo em praticamente todos os pedidos e entrega recomendações em um dashboard interativo.</p>
+          <div class="pill-row">
+            <span class="pill">Python</span>
+            <span class="pill">Pandas</span>
+            <span class="pill">SciPy</span>
+            <span class="pill">Statsmodels</span>
+            <span class="pill">Plotly</span>
+            <span class="pill">Streamlit</span>
+            <span class="pill">Jupyter</span>
+          </div>
+          <a href="https://github.com/brunofrancco/Analise-Exploratoria-de-Dados-Superstore-Sales-Analytics" target="_blank" rel="noopener" class="proj-link">Ver no GitHub →</a>
+        </div>
+      </div>
+      <div class="proj-card reveal">
+        <div>
+          <div class="proj-metric">89 → 100</div>
+          <div class="proj-metric-label">// data quality score da base</div>
+        </div>
+        <div>
+          <h4>Customer Analytics: qualidade de dados e EDA</h4>
+          <p>Transforma uma base de clientes consolidada de vários sistemas, com duplicidades, nulos e categorias inconsistentes, em uma base confiável: profiling, limpeza, deduplicação exata e aproximada (fuzzy matching), validação de qualidade e análise estatística orientada a perguntas de negócio.</p>
+          <div class="pill-row">
+            <span class="pill">Python</span>
+            <span class="pill">Pandas</span>
+            <span class="pill">RapidFuzz</span>
+            <span class="pill">SciPy</span>
+            <span class="pill">Seaborn</span>
+            <span class="pill">pytest</span>
+            <span class="pill">GitHub Actions</span>
+          </div>
+          <a href="https://github.com/brunofrancco/customer-analytics-data-quality-eda" target="_blank" rel="noopener" class="proj-link">Ver no GitHub →</a>
+        </div>
       </div>
       <div class="proj-card reveal">
         <div>
@@ -728,33 +841,6 @@
           <a href="#" class="proj-link">Saiba mais →</a>
         </div>
       </div>
-    </div>
-
-    <!-- Projeto de Data Engineering -->
-    <div class="proj-group">
-      <div class="proj-heading reveal">
-        <h3>Data Engineering</h3>
-        <span class="tag tag-engenharia">pipeline &amp; modelagem</span>
-      </div>
-      <div class="proj-card reveal">
-        <div>
-          <div class="proj-metric">15 regras</div>
-          <div class="proj-metric-label">// de qualidade de dados no pipeline</div>
-        </div>
-        <div>
-          <h4>Pipeline e data mart de uma seguradora digital</h4>
-          <p>Pipeline ponta a ponta para a carteira de uma seguradora digital: validação dos dados brutos com quarentena, ETL para um star schema em SQL com snapshot mensal de apólices, 8 indicadores versionados (sinistralidade, cancelamento, funil de conversão e coortes) e relatórios automatizados em Excel e HTML, com testes e CI.</p>
-          <div class="pill-row">
-            <span class="pill">Python</span>
-            <span class="pill">SQL</span>
-            <span class="pill">Pandas</span>
-            <span class="pill">Star schema</span>
-            <span class="pill">ETL</span>
-            <span class="pill">Data quality</span>
-            <span class="pill">GitHub Actions</span>
-          </div>
-          <a href="https://github.com/brunofrancco/data-analytics" target="_blank" rel="noopener" class="proj-link">Ver no GitHub →</a>
-        </div>
       </div>
     </div>
   </div>
